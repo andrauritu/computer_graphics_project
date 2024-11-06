@@ -1,0 +1,25 @@
+#version 330 core
+
+// Vertex position
+layout(location = 0) in vec3 vertexPos;
+
+// Texture coordinates (only used for the background quad)
+layout(location = 1) in vec2 texCoord;
+
+out vec2 TexCoord; // Pass to the fragment shader
+
+// Uniforms
+uniform mat4 transform;     // Transformation matrix for the square
+uniform bool isBackground;  // Check if this is the background
+
+void main() {
+    if (isBackground) {
+        // Background quad: No transformation needed, pass through texture coordinates
+        gl_Position = vec4(vertexPos.xy, 0.0, 1.0);
+        TexCoord = texCoord;
+    } else {
+        // Square: Apply transformation matrix
+        gl_Position = transform * vec4(vertexPos, 1.0);
+        TexCoord = vec2(0.5, 0.5); // Arbitrary value since square is colored, not textured
+    }
+}

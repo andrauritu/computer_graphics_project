@@ -1,0 +1,20 @@
+#version 330 core
+
+uniform vec4 color;               // Color for the square
+uniform sampler2D backgroundTexture; // Texture for the background
+uniform bool isBackground;        // Check if this is the background
+
+in vec2 TexCoord; // Received from vertex shader if background quad
+
+// Output data
+out vec4 fragCol;
+
+void main() {
+    if (isBackground) {
+        // Render the background texture
+        fragCol = texture(backgroundTexture, TexCoord);
+    } else {
+        // Render the color for the square
+        fragCol = color;
+    }
+}
